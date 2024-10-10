@@ -64,4 +64,15 @@ public class AdminController implements AdminService{
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public boolean deleteEmployee(Integer id) {
+        String SQL = "DELETE FROM employee WHERE empId='" + id + "'";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            return connection.createStatement().executeUpdate(SQL) > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

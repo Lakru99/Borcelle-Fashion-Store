@@ -77,7 +77,11 @@ public class AdminDashBoardFormController implements Initializable {
 
     @FXML
     void btnEmpDeleteOnAction(ActionEvent event) {
-
+        if (service.deleteEmployee(Integer.valueOf(empIdFiled.getText()))){
+            new Alert(Alert.AlertType.INFORMATION,"Customer Deleted !!").show();
+        }else{
+            new Alert(Alert.AlertType.ERROR).show();
+        }
     }
 
     @FXML

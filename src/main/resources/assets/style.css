@@ -1,0 +1,20 @@
+.shadow{
+    -fx-effect:dropshadow(three-pass-box, rgba(0,0,0,0,0.5),6,0,0,0);
+}
+.white-bg{
+    -fx-background-color:#fff;
+    -fx-background-radius:8px;
+}
+.card{
+   -fx-background-color:linear-gradient(to right, #a5b1c2, #3d3d3d);
+   -fx-background-radius:8px;
+}
+.icon{
+-fx-text-fill:white;
+-fx-font-size:18px;
+}
+
+.itemBg{
+-fx-background-image: url("itemBg.jpeg");
+-fx-background-size: cover;
+}

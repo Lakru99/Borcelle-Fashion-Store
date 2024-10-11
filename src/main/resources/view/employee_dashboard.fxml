@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.employee.EmployeeDashboardFormController">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="953.0">
+         <children>
+            <BorderPane layoutX="-1.0" layoutY="-1.0" prefHeight="500.0" prefWidth="1000.0">
+               <left>
+                  <AnchorPane prefHeight="465.0" prefWidth="186.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="-1.0" prefHeight="465.0" prefWidth="200.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="178.0" layoutX="18.0" layoutY="-35.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/logo.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="18.0" layoutY="69.0" text="Employee Dashboard" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <JFXButton fx:id="btnHome" layoutX="27.0" layoutY="162.0" onAction="#switchForm" prefHeight="33.0" prefWidth="125.0" style="-fx-background-color: #3C3D37;" text="Home" textFill="WHITE" />
+                              <JFXButton fx:id="btnOrderDashboard" layoutX="27.0" layoutY="206.0" onAction="#switchForm" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #3C3D37;" text="Order" textFill="WHITE" />
+                              <JFXButton fx:id="btnProductDashboard" layoutX="27.0" layoutY="250.0" onAction="#switchForm" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #3C3D37;" text="Product" textFill="WHITE" />
+                              <JFXButton fx:id="btnCustomerDashboard" layoutX="27.0" layoutY="295.0" onAction="#switchForm" prefHeight="38.0" prefWidth="125.0" style="-fx-background-color: #3C3D37;" text="Customer" textFill="WHITE" />
+                              <JFXButton fx:id="btnSuplierDashboard" layoutX="27.0" layoutY="345.0" onAction="#switchForm" prefHeight="38.0" prefWidth="125.0" style="-fx-background-color: #3C3D37;" text="Supplier" textFill="WHITE" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </left>
+               <center>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane fx:id="homeForm" layoutX="9.0" layoutY="11.0" prefHeight="483.0" prefWidth="798.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css" visible="false" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="11.0">
+                           <effect>
+                              <Shadow blurType="ONE_PASS_BOX" height="32.86" radius="12.225" width="18.04" />
+                           </effect>
+                           <styleClass>
+                              <String fx:value="shadow" />
+                              <String fx:value="white-bg" />
+                           </styleClass>
+                           <children>
+                              <AnchorPane layoutX="-1.0" prefHeight="178.0" prefWidth="801.0">
+                                 <children>
+                                    <AnchorPane layoutX="7.0" layoutY="5.0" prefHeight="164.0" prefWidth="244.0" styleClass="card" stylesheets="@../assets/style.css">
+                                       <children>
+                                          <Label layoutX="56.0" layoutY="109.0" prefHeight="28.0" prefWidth="120.0" style="-fx-font-size: 15px; -fx-alignment: center; -fx-font-weight: Bold; -fx-text-fill: white;" text="Total Orders" textAlignment="CENTER" />
+                                          <Label layoutX="176.0" layoutY="33.0" prefHeight="28.0" prefWidth="43.0" style="-fx-font-size: 18px; -fx-alignment: center; -fx-font-weight: Bold; -fx-text-fill: white;" text="0" textAlignment="CENTER" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="262.0" layoutY="6.0" prefHeight="163.0" prefWidth="266.0" styleClass="card" stylesheets="@../assets/style.css">
+                                       <children>
+                                          <Label layoutX="76.0" layoutY="106.0" prefHeight="28.0" prefWidth="120.0" style="-fx-font-size: 15px; -fx-alignment: center; -fx-font-weight: Bold; -fx-text-fill: white;" text="Total Products" textAlignment="CENTER" />
+                                          <Label layoutX="196.0" layoutY="30.0" prefHeight="28.0" prefWidth="43.0" style="-fx-font-size: 18px; -fx-alignment: center; -fx-font-weight: Bold; -fx-text-fill: white;" text="0" textAlignment="CENTER" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="539.0" layoutY="7.0" prefHeight="162.0" prefWidth="252.0" styleClass="card">
+                                       <children>
+                                          <Label layoutX="69.0" layoutY="112.0" prefHeight="28.0" prefWidth="120.0" style="-fx-font-size: 15px; -fx-alignment: center; -fx-font-weight: Bold; -fx-text-fill: white;" text="Total Supplier" textAlignment="CENTER" />
+                                          <Label layoutX="189.0" layoutY="36.0" prefHeight="28.0" prefWidth="43.0" style="-fx-font-size: 18px; -fx-alignment: center; -fx-font-weight: Bold; -fx-text-fill: white;" text="0" textAlignment="CENTER" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                              <BarChart layoutX="34.0" layoutY="221.0" prefHeight="251.0" prefWidth="707.0" style="-fx-background-color: #bdc3c7;">
+                                <xAxis>
+                                  <CategoryAxis side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                              </BarChart>
+                              <Label layoutX="353.0" layoutY="191.0" prefHeight="28.0" prefWidth="120.0" style="-fx-font-size: 15px; -fx-alignment: center; -fx-font-weight: Bold; -fx-text-fill: white;" text="Customer Chart" textAlignment="CENTER" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="orderForm" layoutX="9.0" layoutY="9.0" prefHeight="484.0" prefWidth="798.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css" visible="false">
+                           <styleClass>
+                              <String fx:value="white-bg" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <AnchorPane layoutX="6.0" layoutY="75.0" prefHeight="404.0" prefWidth="784.0" styleClass="itemBg" />
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ebebeb8f" height="406.0" layoutX="6.0" layoutY="73.0" stroke="#0000002a" strokeType="INSIDE" width="785.0" />
+                              <Label layoutX="175.0" layoutY="89.0" text="Order ID : ">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="337.0" layoutY="89.0" text="Date :">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblDate" layoutX="383.0" layoutY="89.0" text="2024-09-11">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="511.0" layoutY="89.0" text="Time :">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblTime" layoutX="557.0" layoutY="89.0" text="09:34:08">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtOrderId" layoutX="243.0" layoutY="86.0" prefHeight="25.0" prefWidth="64.0" style="-fx-background-color: white;" />
+                              <ComboBox fx:id="cmbCustomerID" layoutX="53.0" layoutY="123.0" prefHeight="29.0" prefWidth="150.0" promptText="Customer ID" />
+                              <ComboBox fx:id="cmbItemCode" layoutX="52.0" layoutY="175.0" prefHeight="29.0" prefWidth="150.0" promptText="Item Code" />
+                              <TextField fx:id="txtCustomerName" layoutX="261.0" layoutY="125.0" promptText="Customer Name" style="-fx-background-color: white;" />
+                              <TextField fx:id="txtCustomerAddress" layoutX="464.0" layoutY="125.0" prefHeight="25.0" prefWidth="149.0" promptText="Address" style="-fx-background-color: white;" />
+                              <TextField fx:id="txtItemDescription" layoutX="261.0" layoutY="176.0" promptText="Description" style="-fx-background-color: white;" />
+                              <TextField fx:id="txtStock" layoutX="463.0" layoutY="177.0" prefHeight="26.0" prefWidth="153.0" promptText="Stock" style="-fx-background-color: white;" />
+                              <TextField fx:id="txtUnitPriceOnOrder" layoutX="650.0" layoutY="177.0" prefHeight="26.0" prefWidth="116.0" promptText="Unit Price" style="-fx-background-color: white;" />
+                              <TextField fx:id="txtQtyOnOrder" layoutX="530.0" layoutY="229.0" prefHeight="26.0" prefWidth="88.0" promptText="QTY" style="-fx-background-color: white;" />
+                              <JFXButton layoutX="650.0" layoutY="228.0" onAction="#btnAddToCartOnAction" prefHeight="29.0" prefWidth="116.0" style="-fx-background-color: #27ae60;" text="Add To Cart" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </JFXButton>
+                              <TableView fx:id="tblCart" layoutX="55.0" layoutY="272.0" prefHeight="162.0" prefWidth="713.0">
+                                 <columns>
+                                    <TableColumn fx:id="colOrderItemCode" prefWidth="128.0" text="Item Code" />
+                                    <TableColumn fx:id="colOrderDescription" prefWidth="212.0" text="Description" />
+                                    <TableColumn fx:id="colOrderQty" prefWidth="79.0" text="QTY" />
+                                    <TableColumn fx:id="colOrderUnitPrice" prefWidth="147.0" text="Unit Price" />
+                                    <TableColumn fx:id="colOrderTotal" prefWidth="144.0" text="Total" />
+                                 </columns>
+                              </TableView>
+                              <JFXButton layoutX="667.0" layoutY="441.0" onAction="#btnPlaceOrderOnAction" prefHeight="29.0" prefWidth="99.0" style="-fx-background-color: #27ae60;" text="Place Order" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </JFXButton>
+                              <Label layoutX="55.0" layoutY="445.0" text="Net Total :">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblNetTotal" layoutX="137.0" layoutY="445.0" text="LKR. 0000.00">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9c9e9c" height="64.0" layoutX="5.0" layoutY="4.0" stroke="TRANSPARENT" strokeType="INSIDE" width="788.0">
+                                 <styleClass>
+                                    <String fx:value="shadow" />
+                                    <String fx:value="white-bg" />
+                                 </styleClass>
+                              </Rectangle>
+                              <Label layoutX="242.0" layoutY="12.0" text="Place Order Form" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="32.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="productForm" layoutX="9.0" layoutY="11.0" prefHeight="486.0" prefWidth="797.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css" visible="false">
+                           <styleClass>
+                              <String fx:value="white-bg" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <AnchorPane layoutX="5.0" layoutY="73.0" prefHeight="406.0" prefWidth="783.0" styleClass="itemBg" />
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#ebebeb8f" height="406.0" layoutX="6.0" layoutY="73.0" stroke="#0000002a" strokeType="INSIDE" width="781.0" />
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9c9e9c" height="64.0" layoutX="5.0" layoutY="4.0" stroke="TRANSPARENT" strokeType="INSIDE" width="784.0">
+                                 <styleClass>
+                                    <String fx:value="shadow" />
+                                    <String fx:value="white-bg" />
+                                 </styleClass>
+                              </Rectangle>
+                              <Label layoutX="270.0" layoutY="13.0" text="Product Form" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="32.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="txtItemCode" layoutX="34.0" layoutY="106.0" prefHeight="31.0" prefWidth="102.0" promptText="Item Code" />
+                              <JFXTextField fx:id="txtDescription" layoutX="175.0" layoutY="106.0" prefHeight="31.0" prefWidth="150.0" promptText="Description" />
+                              <JFXTextField fx:id="txtSize" layoutX="365.0" layoutY="106.0" prefHeight="31.0" prefWidth="127.0" promptText="Size" />
+                              <JFXTextField fx:id="txtUnitPriceProduct" layoutX="516.0" layoutY="106.0" prefHeight="31.0" prefWidth="116.0" promptText="Unit Price" />
+                              <JFXTextField fx:id="txtQty" layoutX="645.0" layoutY="109.0" prefHeight="26.0" prefWidth="117.0" promptText="QTY On Hand" />
+                              <JFXButton layoutX="588.0" layoutY="166.0" onAction="#btnDeleteItemOnAction" prefHeight="36.0" prefWidth="83.0" style="-fx-background-color: #e84118;" text="Delete" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton layoutX="684.0" layoutY="165.0" onAction="#btnSearchItemOnAction" prefHeight="37.0" prefWidth="78.0" style="-fx-background-color: #353b48;" text="Search" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <TableView fx:id="tblProducts" layoutX="69.0" layoutY="242.0" prefHeight="209.0" prefWidth="636.0">
+                                 <columns>
+                                    <TableColumn fx:id="colItemCode" prefWidth="94.0" text="Item Code" />
+                                    <TableColumn fx:id="colItemDescription" prefWidth="172.0" text="Description" />
+                                    <TableColumn fx:id="colItemSize" prefWidth="106.0" text="Size" />
+                                    <TableColumn fx:id="colItemUnitPrice" prefWidth="134.0" text="Unit Price" />
+                                    <TableColumn fx:id="colItemQty" prefWidth="129.0" text="QTY On Hand" />
+                                 </columns>
+                              </TableView>
+                              <JFXButton layoutX="387.0" layoutY="167.0" onAction="#btnAddItemOnAction" prefHeight="35.0" prefWidth="79.0" style="-fx-background-color: #4cd137;" text="Add" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton layoutX="486.0" layoutY="168.0" onAction="#btnUpdateItemOnAction" prefHeight="34.0" prefWidth="85.0" style="-fx-background-color: #00a8ff;" text="Update" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="customerForm" layoutX="7.0" layoutY="7.0" prefHeight="487.0" prefWidth="797.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css">
+                           <styleClass>
+                              <String fx:value="white-bg" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <AnchorPane layoutX="5.0" layoutY="73.0" prefHeight="406.0" prefWidth="783.0" styleClass="itemBg" />
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#ebebeb8f" height="406.0" layoutX="6.0" layoutY="73.0" stroke="#0000002a" strokeType="INSIDE" width="781.0" />
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9c9e9c" height="64.0" layoutX="5.0" layoutY="4.0" stroke="TRANSPARENT" strokeType="INSIDE" width="784.0">
+                                 <styleClass>
+                                    <String fx:value="shadow" />
+                                    <String fx:value="white-bg" />
+                                 </styleClass>
+                              </Rectangle>
+                              <Label layoutX="270.0" layoutY="13.0" text="Customer Form" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="32.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="customerIdField" layoutX="34.0" layoutY="106.0" prefHeight="31.0" prefWidth="102.0" promptText="ID" />
+                              <JFXTextField fx:id="customerNameField" layoutX="160.0" layoutY="106.0" prefHeight="31.0" prefWidth="187.0" promptText="Name" />
+                              <JFXTextField fx:id="customerContactField" layoutX="399.0" layoutY="106.0" prefHeight="31.0" prefWidth="167.0" promptText="Contact Number" />
+                              <JFXTextField fx:id="customerCityField" layoutX="604.0" layoutY="106.0" prefHeight="31.0" prefWidth="131.0" promptText="City" />
+                              <JFXButton layoutX="565.0" layoutY="166.0" onAction="#btnDeleteCustomerOnAction" prefHeight="36.0" prefWidth="83.0" style="-fx-background-color: #e84118;" text="Delete" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton layoutX="661.0" layoutY="165.0" onAction="#btnSearchCustomerOnAction" prefHeight="37.0" prefWidth="78.0" style="-fx-background-color: #353b48;" text="Search" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <TableView fx:id="tblCustomers" layoutX="69.0" layoutY="242.0" prefHeight="209.0" prefWidth="636.0">
+                                 <columns>
+                                    <TableColumn fx:id="colCustomerId" prefWidth="94.0" text="Customer ID" />
+                                    <TableColumn fx:id="colCustomerName" prefWidth="175.0" text="Customer Name" />
+                                    <TableColumn fx:id="colCustomerContactNumber" prefWidth="142.0" text="Contact Number" />
+                                    <TableColumn fx:id="colCustomerCity" prefWidth="224.0" text="City" />
+                                 </columns>
+                              </TableView>
+                              <JFXButton layoutX="364.0" layoutY="167.0" onAction="#btnAddCustomerOnAction" prefHeight="35.0" prefWidth="79.0" style="-fx-background-color: #4cd137;" text="Add" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton layoutX="463.0" layoutY="168.0" onAction="#btnUpdateCustomerOnAction" prefHeight="34.0" prefWidth="85.0" style="-fx-background-color: #00a8ff;" text="Update" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="suplierForm" layoutX="7.0" layoutY="11.0" prefHeight="485.0" prefWidth="798.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css" visible="false">
+                           <styleClass>
+                              <String fx:value="white-bg" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <AnchorPane layoutX="5.0" layoutY="73.0" prefHeight="406.0" prefWidth="783.0" styleClass="itemBg" />
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#ebebeb8f" height="406.0" layoutX="6.0" layoutY="73.0" stroke="#0000002a" strokeType="INSIDE" width="781.0" />
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9c9e9c" height="64.0" layoutX="5.0" layoutY="4.0" stroke="TRANSPARENT" strokeType="INSIDE" width="784.0">
+                                 <styleClass>
+                                    <String fx:value="shadow" />
+                                    <String fx:value="white-bg" />
+                                 </styleClass>
+                              </Rectangle>
+                              <Label layoutX="270.0" layoutY="13.0" text="Suplier Form" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="32.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="suplierIdFiled" layoutX="34.0" layoutY="106.0" prefHeight="31.0" prefWidth="102.0" promptText="ID" />
+                              <JFXTextField fx:id="suplierNameFiled" layoutX="160.0" layoutY="106.0" prefHeight="31.0" prefWidth="187.0" promptText="Suplier Name" />
+                              <JFXTextField fx:id="suplierContactField" layoutX="399.0" layoutY="106.0" prefHeight="31.0" prefWidth="167.0" promptText="Contact Number" />
+                              <JFXTextField fx:id="suplierCompanyField" layoutX="604.0" layoutY="106.0" prefHeight="31.0" prefWidth="131.0" promptText="Company" />
+                              <JFXButton layoutX="565.0" layoutY="166.0" onAction="#btnDeleteSuplierOnAction" prefHeight="36.0" prefWidth="83.0" style="-fx-background-color: #e84118;" text="Delete" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton layoutX="661.0" layoutY="165.0" onAction="#btnSearchSuplierOnAction" prefHeight="37.0" prefWidth="78.0" style="-fx-background-color: #353b48;" text="Search" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <TableView fx:id="tblProducts11" layoutX="69.0" layoutY="242.0" prefHeight="209.0" prefWidth="636.0">
+                                 <columns>
+                                    <TableColumn fx:id="colSuplierID" prefWidth="94.0" text="Suplier ID" />
+                                    <TableColumn fx:id="colSuplierName" prefWidth="135.0" text="Suplier Name" />
+                                    <TableColumn fx:id="colSuplierContact" prefWidth="182.0" text="Contact Number" />
+                                    <TableColumn fx:id="colSuplierCompany" prefWidth="112.0" text="Company" />
+                                    <TableColumn fx:id="colSuplierItem" prefWidth="112.0" text="Item" />
+                                 </columns>
+                              </TableView>
+                              <JFXButton layoutX="364.0" layoutY="167.0" onAction="#btnAddSuplierOnAction" prefHeight="35.0" prefWidth="79.0" style="-fx-background-color: #4cd137;" text="Add" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton layoutX="463.0" layoutY="168.0" onAction="#btnUpdateSuplierOnAction" prefHeight="34.0" prefWidth="85.0" style="-fx-background-color: #00a8ff;" text="Update" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXTextField fx:id="suplierItemField" layoutX="34.0" layoutY="169.0" prefHeight="31.0" prefWidth="131.0" promptText="Item" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

@@ -61,5 +61,10 @@
       </JFXButton>
       <JFXTextField fx:id="empEmailField" layoutX="46.0" layoutY="198.0" promptText="Email" />
       <JFXTextField fx:id="empPasswordField" layoutX="230.0" layoutY="198.0" promptText="Password" />
+      <JFXButton layoutX="429.0" layoutY="209.0" onAction="#btnEmpSearchOnAction" prefHeight="25.0" prefWidth="135.0" style="-fx-background-color: #f1c40f;" text="Search" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

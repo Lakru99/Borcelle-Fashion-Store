@@ -60,7 +60,7 @@ public class AdminDashBoardFormController implements Initializable {
     @FXML
     void btnEmpAddOnAction(ActionEvent event) {
         Employee employee=new Employee(
-                Integer.parseInt(empIdFiled.getText()),
+                empIdFiled.getText(),
                 empNameField.getText(),
                 empCompanyField.getText(),
                 Double.parseDouble(empSalaryField.getText()),
@@ -77,8 +77,9 @@ public class AdminDashBoardFormController implements Initializable {
 
     @FXML
     void btnEmpDeleteOnAction(ActionEvent event) {
-        if (service.deleteEmployee(Integer.valueOf(empIdFiled.getText()))){
+        if (service.deleteEmployee((empIdFiled.getText()))){
             new Alert(Alert.AlertType.INFORMATION,"Customer Deleted !!").show();
+            loadTable();
         }else{
             new Alert(Alert.AlertType.ERROR).show();
         }
@@ -86,7 +87,21 @@ public class AdminDashBoardFormController implements Initializable {
 
     @FXML
     void btnEmpUpdateOnAction(ActionEvent event) {
-
+        Employee employee=new Employee(
+                empIdFiled.getText(),
+                empNameField.getText(),
+                empCompanyField.getText(),
+                Double.parseDouble(empSalaryField.getText()),
+                empEmailField.getText(),
+                empPasswordField.getText()
+        );
+        service.updateEmployee((employee));
+        loadTable();
+    }
+    @FXML
+    void btnEmpSearchOnAction(ActionEvent event) {
+        Employee employee=service.searchEmployee(empIdFiled.getText());
+        setTextToValues(employee);
     }
 
     @Override
@@ -104,7 +119,7 @@ public class AdminDashBoardFormController implements Initializable {
     }
 
     private void setTextToValues(Employee newValue) {
-        empIdFiled.setText(String.valueOf(newValue.getEmpId()));
+        empIdFiled.setText(newValue.getEmpId());
         empNameField.setText(newValue.getEmpName());
         empCompanyField.setText(newValue.getEmpCompany());
         empSalaryField.setText(String.valueOf(newValue.getEmpSalary()));

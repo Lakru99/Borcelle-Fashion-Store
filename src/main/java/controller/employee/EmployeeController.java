@@ -21,7 +21,7 @@ public class EmployeeController implements EmployeeService{
     }
 
     @Override
-    public boolean addEmployee(Customer customer) {
+    public boolean addCustomer(Customer customer) {
         try {
             String SQL = "INSERT INTO customer VALUES(?,?,?,?)";
             Connection connection = DBConnection.getInstance().getConnection();
@@ -53,9 +53,20 @@ public class EmployeeController implements EmployeeService{
                         resultSet.getString("customerCity")
                 );
                 customerObservableList.add(customer);
-                System.out.println(customer);
+                //System.out.println(customer);
             }
             return customerObservableList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean deleteCustomer(String id) {
+        String SQL = "DELETE FROM customer WHERE customerId='" + id + "'";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            return connection.createStatement().executeUpdate(SQL) > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

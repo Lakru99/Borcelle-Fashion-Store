@@ -200,6 +200,26 @@ public class EmployeeDashboardFormController implements Initializable {
     private JFXTextField suplierItemField;
 
     EmployeeService employeeService = EmployeeController.getInstance();
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        homeForm.setVisible(true);
+        orderForm.setVisible(false);
+        productForm.setVisible(false);
+        customerForm.setVisible(false);
+        suplierForm.setVisible(false);
+
+        colCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        colCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        colCustomerContactNumber.setCellValueFactory(new PropertyValueFactory<>("customerContact"));
+        colCustomerCity.setCellValueFactory(new PropertyValueFactory<>("customerCity"));
+
+        tblCustomers.getSelectionModel().selectedItemProperty().addListener(((observableValue, oldValue, newValue) -> {
+            setCustomerTextToValues(newValue);
+        }));
+        loadTableCustomer();
+    }
+
     @FXML
     void btnAddCustomerOnAction(ActionEvent event) {
         Customer customer=new Customer(
@@ -208,7 +228,7 @@ public class EmployeeDashboardFormController implements Initializable {
                 customerContactField.getText(),
                 customerCityField.getText()
         );
-        if (employeeService.addEmployee(customer)){
+        if (employeeService.addCustomer(customer)){
             new Alert(Alert.AlertType.INFORMATION,"Customer Added !!").show();
             loadTableCustomer();
         }else {
@@ -218,7 +238,12 @@ public class EmployeeDashboardFormController implements Initializable {
 
     @FXML
     void btnDeleteCustomerOnAction(ActionEvent event) {
-
+        if (employeeService.deleteCustomer((customerIdField.getText()))){
+            new Alert(Alert.AlertType.INFORMATION,"Customer Deleted !!").show();
+            loadTableCustomer();
+        }else{
+            new Alert(Alert.AlertType.ERROR).show();
+        }
     }
     @FXML
     void btnSearchCustomerOnAction(ActionEvent event) {
@@ -227,6 +252,12 @@ public class EmployeeDashboardFormController implements Initializable {
     @FXML
     void btnUpdateCustomerOnAction(ActionEvent event) {
 
+    }
+    private void setCustomerTextToValues(Customer newValue) {
+        customerIdField.setText(newValue.getCustomerId());
+        customerNameField.setText(newValue.getCustomerName());
+        customerContactField.setText(newValue.getCustomerContact());
+        customerCityField.setText(newValue.getCustomerCity());
     }
 
     private void loadTableCustomer() {
@@ -325,29 +356,7 @@ public class EmployeeDashboardFormController implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        homeForm.setVisible(true);
-        orderForm.setVisible(false);
-        productForm.setVisible(false);
-        customerForm.setVisible(false);
-        suplierForm.setVisible(false);
 
-        loadTableCustomer();
-        colCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        colCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        colCustomerContactNumber.setCellValueFactory(new PropertyValueFactory<>("customerContact"));
-        colCustomerCity.setCellValueFactory(new PropertyValueFactory<>("customerCity"));
 
-        tblCustomers.getSelectionModel().selectedItemProperty().addListener(((observableValue, oldValue, newValue) -> {
-            setCustomerTextToValues(newValue);
-        }));
-    }
 
-    private void setCustomerTextToValues(Customer newValue) {
-        customerIdField.setText(newValue.getCustomerId());
-        customerNameField.setText(newValue.getCustomerName());
-        customerContactField.setText(newValue.getCustomerContact());
-        customerCityField.setText(newValue.getCustomerCity());
-    }
 }

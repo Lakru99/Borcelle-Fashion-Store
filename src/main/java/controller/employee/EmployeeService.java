@@ -5,6 +5,7 @@ import dto.Employee;
 import javafx.collections.ObservableList;
 
 public interface EmployeeService {
-    boolean addEmployee(Customer customer);
+    boolean addCustomer(Customer customer);
     ObservableList<Customer> getAllCustomer();
+    boolean deleteCustomer(String id);
 }

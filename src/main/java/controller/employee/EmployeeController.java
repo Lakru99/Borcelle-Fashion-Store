@@ -100,10 +100,11 @@ public class EmployeeController implements EmployeeService{
             String SQL = "UPDATE customer SET customerName=?, customerContactNumber=?, customerCity=?  WHERE customerId=?";
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement pstm = connection.prepareStatement(SQL);
-            pstm.setObject(1, customer.getCustomerId());
-            pstm.setObject(2,customer.getCustomerName());
-            pstm.setObject(3,customer.getCustomerContact());
-            pstm.setObject(4,customer.getCustomerCity());
+
+            pstm.setObject(1,customer.getCustomerName());
+            pstm.setObject(2,customer.getCustomerContact());
+            pstm.setObject(3,customer.getCustomerCity());
+            pstm.setObject(4, customer.getCustomerId());
             return pstm.executeUpdate() > 0;
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,"Error : " + e.getMessage()).show();

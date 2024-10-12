@@ -9,6 +9,7 @@ public interface EmployeeService {
     ObservableList<Customer> getAllCustomer();
     boolean deleteCustomer(String id);
     Customer searchCustomer(String id);
+
     boolean updateCustomer(Customer customer);
 
 }

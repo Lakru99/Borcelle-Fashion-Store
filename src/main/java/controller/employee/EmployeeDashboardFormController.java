@@ -247,7 +247,8 @@ public class EmployeeDashboardFormController implements Initializable {
     }
     @FXML
     void btnSearchCustomerOnAction(ActionEvent event) {
-
+            Customer customer = employeeService.searchCustomer(customerIdField.getText());
+            setCustomerTextToValues(customer);
     }
     @FXML
     void btnUpdateCustomerOnAction(ActionEvent event) {

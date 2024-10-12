@@ -71,4 +71,26 @@ public class EmployeeController implements EmployeeService{
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public Customer searchCustomer(String id) {
+        try {
+            String SQL = "SELECT * FROM customer WHERE customerId=?";
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement psTm = connection.prepareStatement(SQL);
+            psTm.setObject(1,id);
+            ResultSet resultSet = psTm.executeQuery();
+            if(resultSet.next()){
+                return new Customer(
+                        resultSet.getString("customerId"),
+                        resultSet.getString("customerName"),
+                        resultSet.getString("customerContactNumber"),
+                        resultSet.getString("customerCity")
+                );
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR,"Error : " + e.getMessage()).show();
+        }
+        return null;
+    }
 }

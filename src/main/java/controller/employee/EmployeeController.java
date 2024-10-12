@@ -93,4 +93,21 @@ public class EmployeeController implements EmployeeService{
         }
         return null;
     }
+
+    @Override
+    public boolean updateCustomer(Customer customer) {
+        try {
+            String SQL = "UPDATE customer SET customerName=?, customerContactNumber=?, customerCity=?  WHERE customerId=?";
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement(SQL);
+            pstm.setObject(1, customer.getCustomerId());
+            pstm.setObject(2,customer.getCustomerName());
+            pstm.setObject(3,customer.getCustomerContact());
+            pstm.setObject(4,customer.getCustomerCity());
+            return pstm.executeUpdate() > 0;
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR,"Error : " + e.getMessage()).show();
+        }
+        return false;
+    }
 }

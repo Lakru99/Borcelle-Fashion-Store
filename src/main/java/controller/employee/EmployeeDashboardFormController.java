@@ -252,7 +252,14 @@ public class EmployeeDashboardFormController implements Initializable {
     }
     @FXML
     void btnUpdateCustomerOnAction(ActionEvent event) {
-
+            Customer customer=new Customer(
+                    customerIdField.getText(),
+                    customerNameField.getText(),
+                    customerContactField.getText(),
+                    customerCityField.getText()
+            );
+            employeeService.updateCustomer((customer));
+            loadTableCustomer();
     }
     private void setCustomerTextToValues(Customer newValue) {
         customerIdField.setText(newValue.getCustomerId());

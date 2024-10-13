@@ -258,14 +258,20 @@ public class EmployeeDashboardFormController implements Initializable {
                     customerContactField.getText(),
                     customerCityField.getText()
             );
-            employeeService.updateCustomer((customer));
-            loadTableCustomer();
+            employeeService.updateCustomer(customer);
+           loadTableCustomer();
+        setCustomerTextToValues(customer);
     }
     private void setCustomerTextToValues(Customer newValue) {
-        customerIdField.setText(newValue.getCustomerId());
-        customerNameField.setText(newValue.getCustomerName());
-        customerContactField.setText(newValue.getCustomerContact());
-        customerCityField.setText(newValue.getCustomerCity());
+        if (newValue != null) {
+            customerIdField.setText(newValue.getCustomerId());
+            customerNameField.setText(newValue.getCustomerName());
+            customerContactField.setText(newValue.getCustomerContact());
+            customerCityField.setText(newValue.getCustomerCity());
+            System.out.println(newValue.getCustomerId());
+        }else{
+            System.out.println("Customer is null");
+        }
     }
 
     private void loadTableCustomer() {
@@ -275,6 +281,20 @@ public class EmployeeDashboardFormController implements Initializable {
 
     @FXML
     void btnAddItemOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnDeleteItemOnAction(ActionEvent event) {
+
+    }
+    @FXML
+    void btnSearchItemOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnUpdateItemOnAction(ActionEvent event) {
 
     }
 
@@ -290,10 +310,7 @@ public class EmployeeDashboardFormController implements Initializable {
 
 
 
-    @FXML
-    void btnDeleteItemOnAction(ActionEvent event) {
 
-    }
 
     @FXML
     void btnDeleteSuplierOnAction(ActionEvent event) {
@@ -307,10 +324,7 @@ public class EmployeeDashboardFormController implements Initializable {
 
 
 
-    @FXML
-    void btnSearchItemOnAction(ActionEvent event) {
 
-    }
 
     @FXML
     void btnSearchSuplierOnAction(ActionEvent event) {
@@ -319,10 +333,7 @@ public class EmployeeDashboardFormController implements Initializable {
 
 
 
-    @FXML
-    void btnUpdateItemOnAction(ActionEvent event) {
 
-    }
 
     @FXML
     void btnUpdateSuplierOnAction(ActionEvent event) {

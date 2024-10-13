@@ -1,9 +1,11 @@
 package controller.employee;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import dto.Customer;
 import dto.Employee;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -198,6 +200,8 @@ public class EmployeeDashboardFormController implements Initializable {
 
     @FXML
     private JFXTextField suplierItemField;
+    @FXML
+    private JFXComboBox<String> categoryField;
 
     EmployeeService employeeService = EmployeeController.getInstance();
 
@@ -209,6 +213,13 @@ public class EmployeeDashboardFormController implements Initializable {
         customerForm.setVisible(false);
         suplierForm.setVisible(false);
 
+        ObservableList<String> categoryTitles = FXCollections.observableArrayList();
+        categoryTitles.add("Gents");
+        categoryTitles.add("Ladies");
+        categoryTitles.add("Kids");
+        categoryField.setItems(categoryTitles);
+
+
         colCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         colCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         colCustomerContactNumber.setCellValueFactory(new PropertyValueFactory<>("customerContact"));
@@ -218,6 +229,12 @@ public class EmployeeDashboardFormController implements Initializable {
             setCustomerTextToValues(newValue);
         }));
         loadTableCustomer();
+    }
+    private void clearCustomerFormFields(){
+        customerIdField.setPromptText("ID");
+        customerNameField.setPromptText("Name");
+        customerContactField.setPromptText("Contact Number");
+        customerCityField.setText("City");
     }
 
     @FXML
@@ -231,6 +248,7 @@ public class EmployeeDashboardFormController implements Initializable {
         if (employeeService.addCustomer(customer)){
             new Alert(Alert.AlertType.INFORMATION,"Customer Added !!").show();
             loadTableCustomer();
+            clearCustomerFormFields();
         }else {
             new Alert(Alert.AlertType.ERROR,"Customer Not Added :(").show();
         }
@@ -240,6 +258,7 @@ public class EmployeeDashboardFormController implements Initializable {
     void btnDeleteCustomerOnAction(ActionEvent event) {
         if (employeeService.deleteCustomer((customerIdField.getText()))){
             new Alert(Alert.AlertType.INFORMATION,"Customer Deleted !!").show();
+            clearCustomerFormFields();
             loadTableCustomer();
         }else{
             new Alert(Alert.AlertType.ERROR).show();
@@ -374,6 +393,7 @@ public class EmployeeDashboardFormController implements Initializable {
             suplierForm.setVisible(true);
         }
     }
+
 
 
 

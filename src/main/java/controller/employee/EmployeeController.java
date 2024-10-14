@@ -4,6 +4,7 @@ import controller.admin.AdminController;
 import db.DBConnection;
 import dto.Customer;
 import dto.Employee;
+import dto.Item;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -109,6 +110,44 @@ public class EmployeeController implements EmployeeService{
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,"Error : " + e.getMessage()).show();
         }
+        return false;
+    }
+
+    @Override
+    public boolean addItem(Item item) {
+        try {
+            String SQL = "INSERT INTO item VALUES(?,?,?,?,?)";
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement(SQL);
+            pstm.setObject(1, item.getItemCode());
+            pstm.setObject(2, item.getItemDescription());
+            pstm.setObject(3,item.getItemSize());
+            pstm.setObject(4,item.getItemPrice());
+            pstm.setObject(5,item.getItemQty());
+            return pstm.executeUpdate() > 0;
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Error : " + e.getMessage()).show();
+        }
+        return false;
+    }
+
+    @Override
+    public ObservableList<Item> getAllItem() {
+        return null;
+    }
+
+    @Override
+    public boolean deleteItem(String id) {
+        return false;
+    }
+
+    @Override
+    public Item searcItem(String id) {
+        return null;
+    }
+
+    @Override
+    public boolean updateItem(Item item) {
         return false;
     }
 }

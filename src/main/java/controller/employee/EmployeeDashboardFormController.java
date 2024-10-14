@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import dto.Customer;
 import dto.Employee;
+import dto.Item;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -300,7 +301,20 @@ public class EmployeeDashboardFormController implements Initializable {
 
     @FXML
     void btnAddItemOnAction(ActionEvent event) {
-
+        Item item=new Item(
+                txtItemCode.getText(),
+                txtDescription.getText(),
+                txtSize.getText(),
+                Double.parseDouble(txtUnitPriceProduct.getText()),
+                Integer.parseInt(txtQty.getText())
+        );
+        if (employeeService.addItem(item)){
+            new Alert(Alert.AlertType.INFORMATION,"Item Added !!").show();
+            loadTableCustomer();
+            clearCustomerFormFields();
+        }else {
+            new Alert(Alert.AlertType.ERROR,"Item Not Added :(").show();
+        }
     }
 
     @FXML

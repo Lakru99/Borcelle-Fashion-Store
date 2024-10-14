@@ -180,7 +180,7 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="productForm" layoutX="9.0" layoutY="11.0" prefHeight="486.0" prefWidth="797.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css" visible="false">
+                        <AnchorPane fx:id="productForm" layoutX="9.0" layoutY="11.0" prefHeight="486.0" prefWidth="797.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
@@ -288,7 +288,7 @@
                               </JFXButton>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="suplierForm" layoutX="7.0" layoutY="11.0" prefHeight="485.0" prefWidth="798.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css">
+                        <AnchorPane fx:id="suplierForm" layoutX="7.0" layoutY="11.0" prefHeight="485.0" prefWidth="798.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css" visible="false">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />

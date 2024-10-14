@@ -133,7 +133,27 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public ObservableList<Item> getAllItem() {
-        return null;
+        ObservableList<Item> itemObservableList = FXCollections.observableArrayList();
+        try {
+            String SQL = "SELECT * FROM item";
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement psTm = connection.prepareStatement(SQL);
+            ResultSet resultSet = psTm.executeQuery();
+            while (resultSet.next()){
+                Item item=new Item(
+                        resultSet.getString("itemCode"),
+                        resultSet.getString("itemDescription"),
+                        resultSet.getString("itemSize"),
+                        resultSet.getDouble("itemPrice"),
+                        resultSet.getInt("itemQty")
+
+                );
+                itemObservableList.add(item);
+            }
+            return itemObservableList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

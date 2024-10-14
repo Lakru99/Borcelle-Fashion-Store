@@ -116,7 +116,7 @@ public class EmployeeDashboardFormController implements Initializable {
     private JFXTextField txtQty;
 
     @FXML
-    private TableView<?> tblProducts;
+    private TableView<Item> tblProducts;
 
     @FXML
     private TableColumn<?, ?> colItemCode;
@@ -230,7 +230,23 @@ public class EmployeeDashboardFormController implements Initializable {
             setCustomerTextToValues(newValue);
         }));
         loadTableCustomer();
+
+        colItemCode.setCellValueFactory(new PropertyValueFactory<>("itemCode"));
+        colItemDescription.setCellValueFactory(new PropertyValueFactory<>("itemDescription"));
+        colItemSize.setCellValueFactory(new PropertyValueFactory<>("itemSize"));
+        colItemUnitPrice.setCellValueFactory(new PropertyValueFactory<>("itemPrice"));
+        colItemQty.setCellValueFactory(new PropertyValueFactory<>("itemQty"));
+
+        tblProducts.getSelectionModel().selectedItemProperty().addListener(((observableValue, oldValue, newValue) -> {
+            setItemTextToValues(newValue);
+        }));
+        loadTableItem();
+
+
     }
+
+
+
     private void clearCustomerFormFields(){
         customerIdField.setPromptText("ID");
         customerNameField.setPromptText("Name");
@@ -310,7 +326,7 @@ public class EmployeeDashboardFormController implements Initializable {
         );
         if (employeeService.addItem(item)){
             new Alert(Alert.AlertType.INFORMATION,"Item Added !!").show();
-            loadTableCustomer();
+            loadTableItem();
             clearCustomerFormFields();
         }else {
             new Alert(Alert.AlertType.ERROR,"Item Not Added :(").show();
@@ -341,8 +357,22 @@ public class EmployeeDashboardFormController implements Initializable {
 
     }
 
+    private void loadTableItem() {
+        ObservableList<Item> itemObservableList = employeeService.getAllItem();
+        tblProducts.setItems(itemObservableList);
+    }
+    private void setItemTextToValues(Item newValue) {
+        if (newValue != null) {
+            txtItemCode.setText(newValue.getItemCode());
+            txtDescription.setText(newValue.getItemDescription());
+            txtSize.setText(newValue.getItemSize());
+            txtUnitPriceProduct.setText(String.valueOf(newValue.getItemPrice()));
+            txtQty.setText(String.valueOf(newValue.getItemQty()));
 
-
+        }else{
+            System.out.println("Item is null");
+        }
+    }
 
 
     @FXML

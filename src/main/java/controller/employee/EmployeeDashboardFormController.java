@@ -335,7 +335,13 @@ public class EmployeeDashboardFormController implements Initializable {
 
     @FXML
     void btnDeleteItemOnAction(ActionEvent event) {
-
+        if (employeeService.deleteItem((txtItemCode.getText()))){
+            new Alert(Alert.AlertType.INFORMATION,"Item Deleted !!").show();
+            clearCustomerFormFields();
+            loadTableItem();
+        }else{
+            new Alert(Alert.AlertType.ERROR).show();
+        }
     }
     @FXML
     void btnSearchItemOnAction(ActionEvent event) {

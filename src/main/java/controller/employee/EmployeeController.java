@@ -158,7 +158,13 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public boolean deleteItem(String id) {
-        return false;
+        String SQL = "DELETE FROM item WHERE itemCode='" + id + "'";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            return connection.createStatement().executeUpdate(SQL) > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

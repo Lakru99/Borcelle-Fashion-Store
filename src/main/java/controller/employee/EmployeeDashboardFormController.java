@@ -345,12 +345,22 @@ public class EmployeeDashboardFormController implements Initializable {
     }
     @FXML
     void btnSearchItemOnAction(ActionEvent event) {
-
+        Item item = employeeService.searcItem(txtItemCode.getText());
+        setItemTextToValues(item);
     }
 
     @FXML
     void btnUpdateItemOnAction(ActionEvent event) {
-
+        Item item=new Item(
+                txtItemCode.getText(),
+                txtDescription.getText(),
+                txtSize.getText(),
+                Double.parseDouble(txtUnitPriceProduct.getText()),
+                Integer.parseInt(txtQty.getText())
+        );
+        employeeService.updateItem(item);
+        loadTableItem();
+        setItemTextToValues(item);
     }
 
     @FXML

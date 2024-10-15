@@ -169,11 +169,43 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public Item searcItem(String id) {
+        try {
+            String SQL = "SELECT * FROM item WHERE itemCode=?";
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement psTm = connection.prepareStatement(SQL);
+            psTm.setObject(1,id);
+            ResultSet resultSet = psTm.executeQuery();
+            if(resultSet.next()){
+                return new Item(
+                        resultSet.getString("itemCode"),
+                        resultSet.getString("itemDescription"),
+                        resultSet.getString("itemSize"),
+                        resultSet.getDouble("itemPrice"),
+                        resultSet.getInt("itemQty")
+                );
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR,"Error : " + e.getMessage()).show();
+        }
         return null;
     }
 
     @Override
     public boolean updateItem(Item item) {
+        try {
+            String SQL = "UPDATE item SET itemDescription=?, itemSize=?, itemPrice=?, itemQty=?  WHERE itemCode=?";
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement(SQL);
+
+            pstm.setObject(1,item.getItemDescription());
+            pstm.setObject(2,item.getItemSize());
+            pstm.setObject(3,item.getItemPrice());
+            pstm.setObject(4, item.getItemQty());
+            pstm.setObject(5, item.getItemCode());
+            return pstm.executeUpdate() > 0;
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR,"Error : " + e.getMessage()).show();
+        }
         return false;
     }
 }

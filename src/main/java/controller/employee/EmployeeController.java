@@ -257,7 +257,13 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public boolean deleteSupplier(String id) {
-        return false;
+        String SQL = "DELETE FROM supplier WHERE supplierId='" + id + "'";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            return connection.createStatement().executeUpdate(SQL) > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

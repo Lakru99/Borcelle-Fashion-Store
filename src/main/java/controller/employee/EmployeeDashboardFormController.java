@@ -246,12 +246,12 @@ public class EmployeeDashboardFormController implements Initializable {
         loadTableItem();
 
 
-        colSuplierID.setCellValueFactory(new PropertyValueFactory<>("itemCode"));
-        colSuplierName.setCellValueFactory(new PropertyValueFactory<>("itemDescription"));
-        colSuplierContact.setCellValueFactory(new PropertyValueFactory<>("itemSize"));
-        colSuplierCompany.setCellValueFactory(new PropertyValueFactory<>("itemPrice"));
-        colItemCategory.setCellValueFactory(new PropertyValueFactory<>("itemQty"));
-        colSuplierItem.setCellValueFactory(new PropertyValueFactory<>("itemQty"));
+        colSuplierID.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
+        colSuplierName.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
+        colSuplierContact.setCellValueFactory(new PropertyValueFactory<>("supplierContact"));
+        colSuplierCompany.setCellValueFactory(new PropertyValueFactory<>("supplierCompany"));
+        colItemCategory.setCellValueFactory(new PropertyValueFactory<>("supplierItemCategory"));
+        colSuplierItem.setCellValueFactory(new PropertyValueFactory<>("supplierItemName"));
 
         tblSupplier.getSelectionModel().selectedItemProperty().addListener(((observableValue, oldValue, newValue) -> {
             setSupplierTextToValues(newValue);
@@ -408,16 +408,22 @@ public class EmployeeDashboardFormController implements Initializable {
                 suplierItemField.getText()
         );
         if (employeeService.addSupplier(supplier)){
-            new Alert(Alert.AlertType.INFORMATION,"Customer Added !!").show();
+            new Alert(Alert.AlertType.INFORMATION,"Suplier Added !!").show();
             loadTableSupplier();
         }else {
-            new Alert(Alert.AlertType.ERROR,"Customer Not Added :(").show();
+            new Alert(Alert.AlertType.ERROR,"Suplier Not Added :(").show();
         }
     }
 
     @FXML
     void btnDeleteSuplierOnAction(ActionEvent event) {
-
+        if (employeeService.deleteSupplier((suplierIdFiled.getText()))){
+            new Alert(Alert.AlertType.INFORMATION,"Supplier Deleted !!").show();
+//            clearCustomerFormFields();
+            loadTableSupplier();
+        }else{
+            new Alert(Alert.AlertType.ERROR).show();
+        }
     }
 
     @FXML
@@ -441,11 +447,11 @@ public class EmployeeDashboardFormController implements Initializable {
             suplierNameFiled.setText(newValue.getSupplierName());
             suplierContactField.setText(newValue.getSupplierContact());
             suplierCompanyField.setText(newValue.getSupplierCompany());
-            //categoryField.setText(newValue.getSupplierItemCategory());
+            categoryField.setValue(newValue.getSupplierItemCategory());
             suplierItemField.setText(newValue.getSupplierItemName());
 
         }else{
-            System.out.println("Customer is null");
+            System.out.println("Supplier is null");
         }
     }
 

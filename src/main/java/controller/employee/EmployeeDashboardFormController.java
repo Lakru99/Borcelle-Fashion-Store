@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 import dto.Customer;
 import dto.Employee;
 import dto.Item;
+import dto.Supplier;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -182,7 +183,7 @@ public class EmployeeDashboardFormController implements Initializable {
     private JFXTextField suplierCompanyField;
 
     @FXML
-    private TableView<?> tblProducts11;
+    private TableView<Supplier> tblSupplier;
 
     @FXML
     private TableColumn<?, ?> colSuplierID;
@@ -195,6 +196,8 @@ public class EmployeeDashboardFormController implements Initializable {
 
     @FXML
     private TableColumn<?, ?> colSuplierCompany;
+    @FXML
+    private TableColumn<?, ?> colItemCategory;
 
     @FXML
     private TableColumn<?, ?> colSuplierItem;
@@ -241,6 +244,19 @@ public class EmployeeDashboardFormController implements Initializable {
             setItemTextToValues(newValue);
         }));
         loadTableItem();
+
+
+        colSuplierID.setCellValueFactory(new PropertyValueFactory<>("itemCode"));
+        colSuplierName.setCellValueFactory(new PropertyValueFactory<>("itemDescription"));
+        colSuplierContact.setCellValueFactory(new PropertyValueFactory<>("itemSize"));
+        colSuplierCompany.setCellValueFactory(new PropertyValueFactory<>("itemPrice"));
+        colItemCategory.setCellValueFactory(new PropertyValueFactory<>("itemQty"));
+        colSuplierItem.setCellValueFactory(new PropertyValueFactory<>("itemQty"));
+
+        tblSupplier.getSelectionModel().selectedItemProperty().addListener(((observableValue, oldValue, newValue) -> {
+            setSupplierTextToValues(newValue);
+        }));
+        loadTableSupplier();
 
 
     }
@@ -363,15 +379,7 @@ public class EmployeeDashboardFormController implements Initializable {
         setItemTextToValues(item);
     }
 
-    @FXML
-    void btnAddSuplierOnAction(ActionEvent event) {
 
-    }
-
-    @FXML
-    void btnAddToCartOnAction(ActionEvent event) {
-
-    }
 
     private void loadTableItem() {
         ObservableList<Item> itemObservableList = employeeService.getAllItem();
@@ -389,12 +397,64 @@ public class EmployeeDashboardFormController implements Initializable {
             System.out.println("Item is null");
         }
     }
-
+    @FXML
+    void btnAddSuplierOnAction(ActionEvent event) {
+        Supplier supplier=new Supplier(
+                suplierIdFiled.getText(),
+                suplierNameFiled.getText(),
+                suplierContactField.getText(),
+                suplierCompanyField.getText(),
+                categoryField.getValue(),
+                suplierItemField.getText()
+        );
+        if (employeeService.addSupplier(supplier)){
+            new Alert(Alert.AlertType.INFORMATION,"Customer Added !!").show();
+            loadTableSupplier();
+        }else {
+            new Alert(Alert.AlertType.ERROR,"Customer Not Added :(").show();
+        }
+    }
 
     @FXML
     void btnDeleteSuplierOnAction(ActionEvent event) {
 
     }
+
+    @FXML
+    void btnSearchSuplierOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnUpdateSuplierOnAction(ActionEvent event) {
+
+    }
+
+    private void loadTableSupplier() {
+        ObservableList<Supplier> supplierObservableList = employeeService.getAllSupplier();
+        tblSupplier.setItems(supplierObservableList);
+    }
+
+    private void setSupplierTextToValues(Supplier newValue) {
+        if (newValue != null) {
+            suplierIdFiled.setText(newValue.getSupplierId());
+            suplierNameFiled.setText(newValue.getSupplierName());
+            suplierContactField.setText(newValue.getSupplierContact());
+            suplierCompanyField.setText(newValue.getSupplierCompany());
+            //categoryField.setText(newValue.getSupplierItemCategory());
+            suplierItemField.setText(newValue.getSupplierItemName());
+
+        }else{
+            System.out.println("Customer is null");
+        }
+    }
+
+    @FXML
+    void btnAddToCartOnAction(ActionEvent event) {
+
+    }
+
+
 
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
@@ -405,19 +465,13 @@ public class EmployeeDashboardFormController implements Initializable {
 
 
 
-    @FXML
-    void btnSearchSuplierOnAction(ActionEvent event) {
-
-    }
 
 
 
 
 
-    @FXML
-    void btnUpdateSuplierOnAction(ActionEvent event) {
 
-    }
+
 
     @FXML
     void switchForm(ActionEvent event) {

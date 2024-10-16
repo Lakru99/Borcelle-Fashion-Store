@@ -180,7 +180,7 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="productForm" layoutX="9.0" layoutY="11.0" prefHeight="486.0" prefWidth="797.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css">
+                        <AnchorPane fx:id="productForm" layoutX="9.0" layoutY="11.0" prefHeight="486.0" prefWidth="797.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css" visible="false">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
@@ -288,7 +288,7 @@
                               </JFXButton>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="suplierForm" layoutX="7.0" layoutY="11.0" prefHeight="485.0" prefWidth="798.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css" visible="false">
+                        <AnchorPane fx:id="suplierForm" layoutX="7.0" layoutY="11.0" prefHeight="485.0" prefWidth="798.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
@@ -321,7 +321,7 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </JFXButton>
-                              <TableView fx:id="tblProducts11" layoutX="69.0" layoutY="242.0" prefHeight="209.0" prefWidth="636.0">
+                              <TableView fx:id="tblSupplier" layoutX="69.0" layoutY="242.0" prefHeight="209.0" prefWidth="636.0">
                                  <columns>
                                     <TableColumn fx:id="colSuplierID" prefWidth="94.0" text="Suplier ID" />
                                     <TableColumn fx:id="colSuplierName" prefWidth="135.0" text="Suplier Name" />

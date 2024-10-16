@@ -3,6 +3,7 @@ package controller.employee;
 import dto.Customer;
 import dto.Employee;
 import dto.Item;
+import dto.Supplier;
 import javafx.collections.ObservableList;
 
 public interface EmployeeService {
@@ -17,5 +18,11 @@ public interface EmployeeService {
     boolean deleteItem(String id);
     Item searcItem(String id);
     boolean updateItem(Item item);
+
+    boolean addSupplier(Supplier supplier);
+    ObservableList<Supplier> getAllSupplier();
+    boolean deleteSupplier(String id);
+    Supplier searcSupplier(String id);
+    boolean updateSupplier(Supplier supplier);
 
 }

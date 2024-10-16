@@ -5,6 +5,7 @@ import db.DBConnection;
 import dto.Customer;
 import dto.Employee;
 import dto.Item;
+import dto.Supplier;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -206,6 +207,66 @@ public class EmployeeController implements EmployeeService{
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,"Error : " + e.getMessage()).show();
         }
+        return false;
+    }
+
+    @Override
+    public boolean addSupplier(Supplier supplier) {
+        try {
+            String SQL = "INSERT INTO supplier VALUES(?,?,?,?,?,?)";
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement(SQL);
+            pstm.setObject(1, supplier.getSupplierId());
+            pstm.setObject(2, supplier.getSupplierName());
+            pstm.setObject(3,supplier.getSupplierContact());
+            pstm.setObject(4,supplier.getSupplierCompany());
+            pstm.setObject(5,supplier.getSupplierItemCategory());
+            pstm.setObject(6,supplier.getSupplierItemName());
+            return pstm.executeUpdate() > 0;
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Error : " + e.getMessage()).show();
+        }
+        return false;
+    }
+
+    @Override
+    public ObservableList<Supplier> getAllSupplier() {
+        ObservableList<Supplier> supplierObservableList = FXCollections.observableArrayList();
+        try {
+            String SQL = "SELECT * FROM supplier";
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement psTm = connection.prepareStatement(SQL);
+            ResultSet resultSet = psTm.executeQuery();
+            while (resultSet.next()){
+                Supplier supplier=new Supplier(
+                        resultSet.getString("supplierId"),
+                        resultSet.getString("supplierName"),
+                        resultSet.getString("supplierContact"),
+                        resultSet.getString("supplierCompany"),
+                        resultSet.getString("supplierItemCategory"),
+                        resultSet.getString("supplierItemName")
+
+                );
+                supplierObservableList.add(supplier);
+            }
+            return supplierObservableList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean deleteSupplier(String id) {
+        return false;
+    }
+
+    @Override
+    public Supplier searcSupplier(String id) {
+        return null;
+    }
+
+    @Override
+    public boolean updateSupplier(Supplier supplier) {
         return false;
     }
 }

@@ -428,12 +428,23 @@ public class EmployeeDashboardFormController implements Initializable {
 
     @FXML
     void btnSearchSuplierOnAction(ActionEvent event) {
-
+        Supplier supplier = employeeService.searcSupplier(suplierIdFiled.getText());
+        setSupplierTextToValues(supplier);
     }
 
     @FXML
     void btnUpdateSuplierOnAction(ActionEvent event) {
-
+        Supplier supplier=new Supplier(
+                suplierIdFiled.getText(),
+                suplierNameFiled.getText(),
+                suplierContactField.getText(),
+                suplierCompanyField.getText(),
+                categoryField.getValue(),
+                suplierItemField.getText()
+        );
+        employeeService.updateSupplier(supplier);
+        loadTableSupplier();
+        setSupplierTextToValues(supplier);
     }
 
     private void loadTableSupplier() {

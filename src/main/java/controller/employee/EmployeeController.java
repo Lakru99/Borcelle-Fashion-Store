@@ -268,11 +268,44 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public Supplier searcSupplier(String id) {
+        try {
+            String SQL = "SELECT * FROM supplier WHERE supplierId=?";
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement psTm = connection.prepareStatement(SQL);
+            psTm.setObject(1,id);
+            ResultSet resultSet = psTm.executeQuery();
+            if(resultSet.next()){
+                return new Supplier(
+                        resultSet.getString("supplierId"),
+                        resultSet.getString("supplierName"),
+                        resultSet.getString("supplierContact"),
+                        resultSet.getString("supplierCompany"),
+                        resultSet.getString("supplierItemCategory"),
+                        resultSet.getString("supplierItemName")
+                );
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR,"Error : " + e.getMessage()).show();
+        }
         return null;
     }
 
     @Override
     public boolean updateSupplier(Supplier supplier) {
+        try {
+            String SQL = "UPDATE supplier SET supplierName=?, supplierContact=?, supplierCompany=?, supplierItemCategory=? , supplierItemName=?   WHERE supplierId=?";
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement(SQL);
+            pstm.setObject(1, supplier.getSupplierName());
+            pstm.setObject(2,supplier.getSupplierContact());
+            pstm.setObject(3,supplier.getSupplierCompany());
+            pstm.setObject(4,supplier.getSupplierItemCategory());
+            pstm.setObject(5,supplier.getSupplierItemName());
+            pstm.setObject(6, supplier.getSupplierId());
+            return pstm.executeUpdate() > 0;
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR,"Error : " + e.getMessage()).show();
+        }
         return false;
     }
 }

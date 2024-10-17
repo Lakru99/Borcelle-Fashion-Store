@@ -609,7 +609,6 @@ public class EmployeeDashboardFormController implements Initializable {
         txtCustomerAddress.setText(customer.getCustomerCity());
         System.out.println(customerID);
     }
-//
     private void loadItemCodes(){
         cmbItemCode.setItems(EmployeeController.getInstance().getItemCodes());
     }

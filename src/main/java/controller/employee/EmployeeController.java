@@ -2,18 +2,17 @@ package controller.employee;
 
 import controller.admin.AdminController;
 import db.DBConnection;
-import dto.Customer;
-import dto.Employee;
-import dto.Item;
-import dto.Supplier;
+import dto.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import util.CrudUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class EmployeeController implements EmployeeService{
     private static EmployeeController instance;
@@ -296,7 +295,7 @@ public class EmployeeController implements EmployeeService{
             String SQL = "UPDATE supplier SET supplierName=?, supplierContact=?, supplierCompany=?, supplierItemCategory=? , supplierItemName=?   WHERE supplierId=?";
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement pstm = connection.prepareStatement(SQL);
-            pstm.setObject(1, supplier.getSupplierName());
+            pstm.setObject(1,supplier.getSupplierName());
             pstm.setObject(2,supplier.getSupplierContact());
             pstm.setObject(3,supplier.getSupplierCompany());
             pstm.setObject(4,supplier.getSupplierItemCategory());
@@ -327,5 +326,27 @@ public class EmployeeController implements EmployeeService{
 
         return itemCodes;
     }
-
+    @Override
+    public boolean updateStock(List<OrderDetail> orderDetails) {
+        for (OrderDetail orderDetail: orderDetails){
+            boolean updateStock = updateStock(orderDetail);
+            if (!updateStock){
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean updateStock(OrderDetail orderDetails){
+        try {
+            String SQL = "UPDATE Item SET itemQty=itemQty-? WHERE ItemCode=?";
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement(SQL);
+            pstm.setObject(1,orderDetails.getQty());
+            pstm.setObject(2,orderDetails.getItemCode());
+            return pstm.executeUpdate() > 0;
+            //return CrudUtil.execute(SQL,orderDetails.getQty(),orderDetails.getItemCode());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -1,10 +1,9 @@
 package controller.employee;
 
-import dto.Customer;
-import dto.Employee;
-import dto.Item;
-import dto.Supplier;
+import dto.*;
 import javafx.collections.ObservableList;
+
+import java.util.List;
 
 public interface EmployeeService {
     boolean addCustomer(Customer customer);
@@ -26,5 +25,7 @@ public interface EmployeeService {
     boolean updateSupplier(Supplier supplier);
     ObservableList<String> getCustomerIds();
     ObservableList<String> getItemCodes();
+
+    boolean updateStock(List<OrderDetail> orderDetails);
 
 }

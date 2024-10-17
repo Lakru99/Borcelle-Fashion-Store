@@ -3,6 +3,7 @@ package controller.employee;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import controller.order.OrderController;
 import dto.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -18,9 +19,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -436,7 +441,6 @@ public class EmployeeDashboardFormController implements Initializable {
     void btnDeleteSuplierOnAction(ActionEvent event) {
         if (employeeService.deleteSupplier((suplierIdFiled.getText()))){
             new Alert(Alert.AlertType.INFORMATION,"Supplier Deleted !!").show();
-//            clearCustomerFormFields();
             loadTableSupplier();
         }else{
             new Alert(Alert.AlertType.ERROR).show();
@@ -485,14 +489,51 @@ public class EmployeeDashboardFormController implements Initializable {
 
     @FXML
     void btnAddToCartOnAction(ActionEvent event) {
+        colOrderItemCode.setCellValueFactory(new PropertyValueFactory<>("ItemCode"));
+        colOrderDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colOrderQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colOrderUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+        colOrderTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
 
+        String itemCode = cmbItemCode.getValue();
+        String description = txtItemDescription.getText();
+        Integer qty = Integer.parseInt(txtQtyOnOrder.getText());
+        Double unitPrice = Double.parseDouble(txtUnitPriceOnOrder.getText());
+
+        Double total = unitPrice*qty;
+
+
+        if (Integer.parseInt(txtStock.getText())<qty){
+            new Alert(Alert.AlertType.WARNING,"Out of Stock.Pleace Check Your Stock Count").show();
+        }else{
+            cartTMS.add(new CartTM(itemCode,description,qty,unitPrice,total));
+            calcNetTotal();
+        }
+
+        tblCart.setItems(cartTMS);
     }
 
 
 
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
+        String orderId = txtOrderId.getText();
+        LocalDate orderDate = LocalDate.now();
+        String customerId = cmbCustomerID.getValue();
 
+        List<OrderDetail> orderDetails = new ArrayList<>();
+
+        cartTMS.forEach(obj->{
+            orderDetails.add(new OrderDetail(orderId, obj.getItemCode(), obj.getQty(),0.0));
+
+        });
+        Order order = new Order(orderId, orderDate, customerId, orderDetails);
+        try {
+            new OrderController().placeOrder(order);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(order);
     }
 
 

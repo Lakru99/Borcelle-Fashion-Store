@@ -96,7 +96,7 @@
                               <Label layoutX="353.0" layoutY="191.0" prefHeight="28.0" prefWidth="120.0" style="-fx-font-size: 15px; -fx-alignment: center; -fx-font-weight: Bold; -fx-text-fill: white;" text="Customer Chart" textAlignment="CENTER" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="orderForm" layoutX="9.0" layoutY="9.0" prefHeight="484.0" prefWidth="798.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css" visible="false">
+                        <AnchorPane fx:id="orderForm" layoutX="9.0" layoutY="9.0" prefHeight="484.0" prefWidth="798.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
@@ -288,7 +288,7 @@
                               </JFXButton>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="suplierForm" layoutX="7.0" layoutY="11.0" prefHeight="485.0" prefWidth="798.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css">
+                        <AnchorPane fx:id="suplierForm" layoutX="7.0" layoutY="11.0" prefHeight="485.0" prefWidth="798.0" style="-fx-background-color: #4b4b4b;" stylesheets="@../assets/style.css" visible="false">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />

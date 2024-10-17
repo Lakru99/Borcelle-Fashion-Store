@@ -308,4 +308,24 @@ public class EmployeeController implements EmployeeService{
         }
         return false;
     }
+    public ObservableList<String> getCustomerIds() {
+        ObservableList<String> customerIds = FXCollections.observableArrayList();
+        ObservableList<Customer> customerObservableList = getAllCustomer();
+        customerObservableList.forEach(customer -> {
+            customerIds.add(customer.getCustomerId());
+        });
+
+        return customerIds;
+    }
+    @Override
+    public ObservableList<String> getItemCodes() {
+        ObservableList<String> itemCodes = FXCollections.observableArrayList();
+        ObservableList<Item> itemObservableList = getAllItem();
+        itemObservableList.forEach(item -> {
+            itemCodes.add(item.getItemCode());
+        });
+
+        return itemCodes;
+    }
+
 }

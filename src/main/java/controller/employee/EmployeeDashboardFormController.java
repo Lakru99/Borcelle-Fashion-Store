@@ -3,10 +3,10 @@ package controller.employee;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import dto.Customer;
-import dto.Employee;
-import dto.Item;
-import dto.Supplier;
+import dto.*;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,8 +15,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 
@@ -54,10 +58,10 @@ public class EmployeeDashboardFormController implements Initializable {
     private TextField txtOrderId;
 
     @FXML
-    private ComboBox<?> cmbCustomerID;
+    private ComboBox<String> cmbCustomerID;
 
     @FXML
-    private ComboBox<?> cmbItemCode;
+    private ComboBox<String> cmbItemCode;
 
     @FXML
     private TextField txtCustomerName;
@@ -78,7 +82,7 @@ public class EmployeeDashboardFormController implements Initializable {
     private TextField txtQtyOnOrder;
 
     @FXML
-    private TableView<?> tblCart;
+    private TableView<CartTM> tblCart;
 
     @FXML
     private TableColumn<?, ?> colOrderItemCode;
@@ -208,9 +212,13 @@ public class EmployeeDashboardFormController implements Initializable {
     private JFXComboBox<String> categoryField;
 
     EmployeeService employeeService = EmployeeController.getInstance();
+    ObservableList<CartTM> cartTMS = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadDateAndTime();
+        loadCustomerIds();
+        loadItemCodes();
         homeForm.setVisible(true);
         orderForm.setVisible(false);
         productForm.setVisible(false);
@@ -258,7 +266,16 @@ public class EmployeeDashboardFormController implements Initializable {
         }));
         loadTableSupplier();
 
-
+        cmbCustomerID.getSelectionModel().selectedItemProperty().addListener((observableValue, s, newVal) -> {
+            if (newVal!=null){
+                searchCustomer(newVal);
+            }
+        });
+        cmbItemCode.getSelectionModel().selectedItemProperty().addListener((observableValue, s, newVal) -> {
+            if (newVal!=null){
+                searchItem(newVal);
+            }
+        });
     }
 
 
@@ -480,16 +497,6 @@ public class EmployeeDashboardFormController implements Initializable {
 
 
 
-
-
-
-
-
-
-
-
-
-
     @FXML
     void switchForm(ActionEvent event) {
         if (event.getSource()==btnHome){
@@ -526,7 +533,50 @@ public class EmployeeDashboardFormController implements Initializable {
     }
 
 
+    private void calcNetTotal() {
+        Double total=0.0;
 
+        for (CartTM cartTM: cartTMS){
+            total+=cartTM.getTotal();
+        }
+        lblNetTotal.setText("LKR. " + total.toString());
+    }
 
+    private void loadDateAndTime(){
+        Date date = new Date();
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        String dateNow =f.format(date);
+
+        lblDate.setText(dateNow);
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e ->{
+            LocalTime now = LocalTime.now();
+            lblTime.setText(now.getHour() + " : " + now.getMinute() + " : " + now.getSecond());
+        }),
+                new KeyFrame(Duration.seconds(1))
+        );
+
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+    private void loadCustomerIds(){
+        cmbCustomerID.setItems(EmployeeController.getInstance().getCustomerIds());
+    }
+    private void searchCustomer(String customerID){
+        Customer customer = employeeService.searchCustomer(customerID);
+        txtCustomerName.setText(customer.getCustomerName());
+        txtCustomerAddress.setText(customer.getCustomerCity());
+        System.out.println(customerID);
+    }
+//
+    private void loadItemCodes(){
+        cmbItemCode.setItems(EmployeeController.getInstance().getItemCodes());
+    }
+    private void searchItem(String newVal) {
+        Item item = employeeService.searcItem(newVal);
+        txtItemDescription.setText(item.getItemDescription());
+        txtStock.setText(item.getItemQty().toString());
+        txtUnitPriceOnOrder.setText(String.valueOf(item.getItemPrice()));
+    }
 
 }

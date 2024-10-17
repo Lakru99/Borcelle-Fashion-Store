@@ -24,5 +24,7 @@ public interface EmployeeService {
     boolean deleteSupplier(String id);
     Supplier searcSupplier(String id);
     boolean updateSupplier(Supplier supplier);
+    ObservableList<String> getCustomerIds();
+    ObservableList<String> getItemCodes();
 
 }

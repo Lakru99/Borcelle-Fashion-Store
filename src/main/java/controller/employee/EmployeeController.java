@@ -23,15 +23,23 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public boolean addCustomer(Customer customer) {
+
+        String SQL = "INSERT INTO customer VALUES(?,?,?,?)";
         try {
-            String SQL = "INSERT INTO customer VALUES(?,?,?,?)";
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement pstm = connection.prepareStatement(SQL);
-            pstm.setObject(1, customer.getCustomerId());
-            pstm.setObject(2,customer.getCustomerName());
-            pstm.setObject(3,customer.getCustomerContact());
-            pstm.setObject(4,customer.getCustomerCity());
-            return pstm.executeUpdate() > 0;
+//            Connection connection = DBConnection.getInstance().getConnection();
+//            PreparedStatement pstm = connection.prepareStatement(SQL);
+//            pstm.setObject(1, customer.getCustomerId());
+//            pstm.setObject(2,customer.getCustomerName());
+//            pstm.setObject(3,customer.getCustomerContact());
+//            pstm.setObject(4,customer.getCustomerCity());
+//            return pstm.executeUpdate() > 0;
+
+            return CrudUtil.execute(SQL,
+                    customer.getCustomerId(),
+                    customer.getCustomerName(),
+                    customer.getCustomerContact(),
+                    customer.getCustomerCity()
+            );
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Error : " + e.getMessage()).show();
         }
@@ -40,21 +48,31 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public ObservableList<Customer> getAllCustomer() {
+        String SQL = "SELECT * FROM customer";
         ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
         try {
-            String SQL = "SELECT * FROM customer";
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement psTm = connection.prepareStatement(SQL);
-            ResultSet resultSet = psTm.executeQuery();
+
+//            Connection connection = DBConnection.getInstance().getConnection();
+//            PreparedStatement psTm = connection.prepareStatement(SQL);
+//            ResultSet resultSet = psTm.executeQuery();
+//            while (resultSet.next()){
+//                Customer customer=new Customer(
+//                        resultSet.getString("customerId"),
+//                        resultSet.getString("customerName"),
+//                        resultSet.getString("customerContactNumber"),
+//                        resultSet.getString("customerCity")
+//                );
+//                customerObservableList.add(customer);
+            ResultSet resultSet = CrudUtil.execute(SQL);
             while (resultSet.next()){
-                Customer customer=new Customer(
-                        resultSet.getString("customerId"),
-                        resultSet.getString("customerName"),
-                        resultSet.getString("customerContactNumber"),
-                        resultSet.getString("customerCity")
+                customerObservableList.add(
+                    new Customer(
+                            resultSet.getString("customerId"),
+                            resultSet.getString("customerName"),
+                            resultSet.getString("customerContactNumber"),
+                            resultSet.getString("customerCity")
+                    )
                 );
-                customerObservableList.add(customer);
-                //System.out.println(customer);
             }
             return customerObservableList;
         } catch (SQLException e) {
@@ -64,10 +82,10 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public boolean deleteCustomer(String id) {
-        String SQL = "DELETE FROM customer WHERE customerId='" + id + "'";
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            return connection.createStatement().executeUpdate(SQL) > 0;
+//            Connection connection = DBConnection.getInstance().getConnection();
+//            return connection.createStatement().executeUpdate(SQL) > 0;
+            return CrudUtil.execute("DELETE FROM customer WHERE customerId=", id);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -75,12 +93,22 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public Customer searchCustomer(String id) {
+        String SQL = "SELECT * FROM customer WHERE customerId=?";
         try {
-            String SQL = "SELECT * FROM customer WHERE customerId=?";
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement psTm = connection.prepareStatement(SQL);
-            psTm.setObject(1,id);
-            ResultSet resultSet = psTm.executeQuery();
+
+//            Connection connection = DBConnection.getInstance().getConnection();
+//            PreparedStatement psTm = connection.prepareStatement(SQL);
+//            psTm.setObject(1,id);
+//            ResultSet resultSet = psTm.executeQuery();
+//            if(resultSet.next()){
+//                return new Customer(
+//                        resultSet.getString("customerId"),
+//                        resultSet.getString("customerName"),
+//                        resultSet.getString("customerContactNumber"),
+//                        resultSet.getString("customerCity")
+//                );
+//            }
+            ResultSet resultSet = CrudUtil.execute(SQL, id);
             if(resultSet.next()){
                 return new Customer(
                         resultSet.getString("customerId"),
@@ -97,16 +125,22 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public boolean updateCustomer(Customer customer) {
+        String SQL = "UPDATE customer SET customerName=?, customerContactNumber=?, customerCity=?  WHERE customerId=?";
         try {
-            String SQL = "UPDATE customer SET customerName=?, customerContactNumber=?, customerCity=?  WHERE customerId=?";
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement pstm = connection.prepareStatement(SQL);
-
-            pstm.setObject(1,customer.getCustomerName());
-            pstm.setObject(2,customer.getCustomerContact());
-            pstm.setObject(3,customer.getCustomerCity());
-            pstm.setObject(4, customer.getCustomerId());
-            return pstm.executeUpdate() > 0;
+//            Connection connection = DBConnection.getInstance().getConnection();
+//            PreparedStatement pstm = connection.prepareStatement(SQL);
+//
+//            pstm.setObject(1,customer.getCustomerName());
+//            pstm.setObject(2,customer.getCustomerContact());
+//            pstm.setObject(3,customer.getCustomerCity());
+//            pstm.setObject(4, customer.getCustomerId());
+//            return pstm.executeUpdate() > 0;
+            return CrudUtil.execute(SQL,
+                    customer.getCustomerName(),
+                    customer.getCustomerContact(),
+                    customer.getCustomerCity(),
+                    customer.getCustomerId()
+                    );
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,"Error : " + e.getMessage()).show();
         }

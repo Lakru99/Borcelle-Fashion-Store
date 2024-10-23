@@ -149,16 +149,15 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public boolean addItem(Item item) {
+        String SQL = "INSERT INTO item VALUES(?,?,?,?,?)";
         try {
-            String SQL = "INSERT INTO item VALUES(?,?,?,?,?)";
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement pstm = connection.prepareStatement(SQL);
-            pstm.setObject(1, item.getItemCode());
-            pstm.setObject(2, item.getItemDescription());
-            pstm.setObject(3,item.getItemSize());
-            pstm.setObject(4,item.getItemPrice());
-            pstm.setObject(5,item.getItemQty());
-            return pstm.executeUpdate() > 0;
+            return CrudUtil.execute(SQL,
+                    item.getItemCode(),
+                    item.getItemDescription(),
+                    item.getItemSize(),
+                    item.getItemPrice(),
+                    item.getItemQty()
+            );
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Error : " + e.getMessage()).show();
         }
@@ -167,12 +166,10 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public ObservableList<Item> getAllItem() {
+        String SQL = "SELECT * FROM item";
         ObservableList<Item> itemObservableList = FXCollections.observableArrayList();
         try {
-            String SQL = "SELECT * FROM item";
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement psTm = connection.prepareStatement(SQL);
-            ResultSet resultSet = psTm.executeQuery();
+            ResultSet resultSet = CrudUtil.execute(SQL);
             while (resultSet.next()){
                 Item item=new Item(
                         resultSet.getString("itemCode"),
@@ -180,7 +177,6 @@ public class EmployeeController implements EmployeeService{
                         resultSet.getString("itemSize"),
                         resultSet.getDouble("itemPrice"),
                         resultSet.getInt("itemQty")
-
                 );
                 itemObservableList.add(item);
             }
@@ -192,10 +188,8 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public boolean deleteItem(String id) {
-        String SQL = "DELETE FROM item WHERE itemCode='" + id + "'";
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            return connection.createStatement().executeUpdate(SQL) > 0;
+            return CrudUtil.execute("DELETE FROM item WHERE itemCode=", id);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -203,8 +197,9 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public Item searcItem(String id) {
+        String SQL = "SELECT * FROM item WHERE itemCode=?";
         try {
-            String SQL = "SELECT * FROM item WHERE itemCode=?";
+
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement psTm = connection.prepareStatement(SQL);
             psTm.setObject(1,id);

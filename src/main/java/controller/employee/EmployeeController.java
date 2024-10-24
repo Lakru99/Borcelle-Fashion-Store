@@ -33,7 +33,6 @@ public class EmployeeController implements EmployeeService{
 //            pstm.setObject(3,customer.getCustomerContact());
 //            pstm.setObject(4,customer.getCustomerCity());
 //            return pstm.executeUpdate() > 0;
-
             return CrudUtil.execute(SQL,
                     customer.getCustomerId(),
                     customer.getCustomerName(),
@@ -51,7 +50,6 @@ public class EmployeeController implements EmployeeService{
         String SQL = "SELECT * FROM customer";
         ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
         try {
-
 //            Connection connection = DBConnection.getInstance().getConnection();
 //            PreparedStatement psTm = connection.prepareStatement(SQL);
 //            ResultSet resultSet = psTm.executeQuery();
@@ -221,18 +219,16 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public boolean updateItem(Item item) {
+        String SQL = "UPDATE item SET itemDescription=?, itemSize=?, itemPrice=?, itemQty=?  WHERE itemCode=?";
         try {
-            String SQL = "UPDATE item SET itemDescription=?, itemSize=?, itemPrice=?, itemQty=?  WHERE itemCode=?";
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement pstm = connection.prepareStatement(SQL);
-
-            pstm.setObject(1,item.getItemDescription());
-            pstm.setObject(2,item.getItemSize());
-            pstm.setObject(3,item.getItemPrice());
-            pstm.setObject(4, item.getItemQty());
-            pstm.setObject(5, item.getItemCode());
-            return pstm.executeUpdate() > 0;
-        } catch (SQLException e) {
+            return CrudUtil.execute(SQL,
+                    item.getItemDescription(),
+                    item.getItemSize(),
+                    item.getItemPrice(),
+                    item.getItemQty(),
+                    item.getItemCode()
+            );
+        }catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,"Error : " + e.getMessage()).show();
         }
         return false;
@@ -240,17 +236,16 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public boolean addSupplier(Supplier supplier) {
+        String SQL = "INSERT INTO supplier VALUES(?,?,?,?,?,?)";
         try {
-            String SQL = "INSERT INTO supplier VALUES(?,?,?,?,?,?)";
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement pstm = connection.prepareStatement(SQL);
-            pstm.setObject(1, supplier.getSupplierId());
-            pstm.setObject(2, supplier.getSupplierName());
-            pstm.setObject(3,supplier.getSupplierContact());
-            pstm.setObject(4,supplier.getSupplierCompany());
-            pstm.setObject(5,supplier.getSupplierItemCategory());
-            pstm.setObject(6,supplier.getSupplierItemName());
-            return pstm.executeUpdate() > 0;
+            return CrudUtil.execute(SQL,
+                    supplier.getSupplierId(),
+                    supplier.getSupplierName(),
+                    supplier.getSupplierContact(),
+                    supplier.getSupplierCompany(),
+                    supplier.getSupplierItemCategory(),
+                    supplier.getSupplierItemName()
+            );
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Error : " + e.getMessage()).show();
         }
@@ -259,23 +254,21 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public ObservableList<Supplier> getAllSupplier() {
+        String SQL = "SELECT * FROM supplier";
         ObservableList<Supplier> supplierObservableList = FXCollections.observableArrayList();
         try {
-            String SQL = "SELECT * FROM supplier";
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement psTm = connection.prepareStatement(SQL);
-            ResultSet resultSet = psTm.executeQuery();
+            ResultSet resultSet = CrudUtil.execute(SQL);
             while (resultSet.next()){
-                Supplier supplier=new Supplier(
-                        resultSet.getString("supplierId"),
-                        resultSet.getString("supplierName"),
-                        resultSet.getString("supplierContact"),
-                        resultSet.getString("supplierCompany"),
-                        resultSet.getString("supplierItemCategory"),
-                        resultSet.getString("supplierItemName")
-
+                supplierObservableList.add(
+                        new Supplier(
+                                resultSet.getString("supplierId"),
+                                resultSet.getString("supplierName"),
+                                resultSet.getString("supplierContact"),
+                                resultSet.getString("supplierCompany"),
+                                resultSet.getString("supplierItemCategory"),
+                                resultSet.getString("supplierItemName")
+                        )
                 );
-                supplierObservableList.add(supplier);
             }
             return supplierObservableList;
         } catch (SQLException e) {
@@ -285,10 +278,8 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public boolean deleteSupplier(String id) {
-        String SQL = "DELETE FROM supplier WHERE supplierId='" + id + "'";
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            return connection.createStatement().executeUpdate(SQL) > 0;
+            return CrudUtil.execute("DELETE FROM supplier WHERE supplierId=", id);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -296,12 +287,9 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public Supplier searcSupplier(String id) {
+        String SQL = "SELECT * FROM supplier WHERE supplierId=?";
         try {
-            String SQL = "SELECT * FROM supplier WHERE supplierId=?";
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement psTm = connection.prepareStatement(SQL);
-            psTm.setObject(1,id);
-            ResultSet resultSet = psTm.executeQuery();
+            ResultSet resultSet = CrudUtil.execute(SQL, id);
             if(resultSet.next()){
                 return new Supplier(
                         resultSet.getString("supplierId"),
@@ -320,17 +308,16 @@ public class EmployeeController implements EmployeeService{
 
     @Override
     public boolean updateSupplier(Supplier supplier) {
+        String SQL = "UPDATE supplier SET supplierName=?, supplierContact=?, supplierCompany=?, supplierItemCategory=? , supplierItemName=?   WHERE supplierId=?";
         try {
-            String SQL = "UPDATE supplier SET supplierName=?, supplierContact=?, supplierCompany=?, supplierItemCategory=? , supplierItemName=?   WHERE supplierId=?";
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement pstm = connection.prepareStatement(SQL);
-            pstm.setObject(1,supplier.getSupplierName());
-            pstm.setObject(2,supplier.getSupplierContact());
-            pstm.setObject(3,supplier.getSupplierCompany());
-            pstm.setObject(4,supplier.getSupplierItemCategory());
-            pstm.setObject(5,supplier.getSupplierItemName());
-            pstm.setObject(6, supplier.getSupplierId());
-            return pstm.executeUpdate() > 0;
+            return CrudUtil.execute(SQL,
+                    supplier.getSupplierName(),
+                    supplier.getSupplierContact(),
+                    supplier.getSupplierCompany(),
+                    supplier.getSupplierItemCategory(),
+                    supplier.getSupplierItemName(),
+                    supplier.getSupplierId()
+            );
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,"Error : " + e.getMessage()).show();
         }
@@ -366,15 +353,13 @@ public class EmployeeController implements EmployeeService{
         return true;
     }
     public boolean updateStock(OrderDetail orderDetails){
+        String SQL = "UPDATE Item SET itemQty=itemQty-? WHERE ItemCode=?";
         try {
-            String SQL = "UPDATE Item SET itemQty=itemQty-? WHERE ItemCode=?";
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement pstm = connection.prepareStatement(SQL);
-            pstm.setObject(1,orderDetails.getQty());
-            pstm.setObject(2,orderDetails.getItemCode());
-            return pstm.executeUpdate() > 0;
-            //return CrudUtil.execute(SQL,orderDetails.getQty(),orderDetails.getItemCode());
-        } catch (SQLException e) {
+            return CrudUtil.execute(SQL,
+                    orderDetails.getQty(),
+                    orderDetails.getItemCode()
+            );
+        }catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

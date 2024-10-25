@@ -17,6 +17,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import service.ServiceFactory;
+import service.SuperService;
+import service.custom.CustomerService;
+import util.ServiceType;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -294,13 +298,15 @@ public class EmployeeDashboardFormController implements Initializable {
 
     @FXML
     void btnAddCustomerOnAction(ActionEvent event) {
+        CustomerService customerService = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
+
         Customer customer=new Customer(
                 customerIdField.getText(),
                 customerNameField.getText(),
                 customerContactField.getText(),
                 customerCityField.getText()
         );
-        if (employeeService.addCustomer(customer)){
+        if (customerService.addCustomer(customer)){
             new Alert(Alert.AlertType.INFORMATION,"Customer Added !!").show();
             loadTableCustomer();
             clearCustomerFormFields();

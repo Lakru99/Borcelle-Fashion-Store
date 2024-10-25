@@ -20,15 +20,23 @@ public class OrderDetailsController {
         return true;
     }
     public boolean addOrderDetail(OrderDetail orderDetails){
+        String SQL = "INSERT INTO orderdetail VALUES(?,?,?,?)";
         try {
-            String SQL = "INSERT INTO orderdetail VALUES(?,?,?,?)";
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement pstm = connection.prepareStatement(SQL);
-            pstm.setObject(1, orderDetails.getOrderId());
-            pstm.setObject(2,orderDetails.getItemCode());
-            pstm.setObject(3,orderDetails.getQty());
-            pstm.setObject(4,orderDetails.getDiscount());
-            return pstm.executeUpdate() > 0;
+
+//            Connection connection = DBConnection.getInstance().getConnection();
+//            PreparedStatement pstm = connection.prepareStatement(SQL);
+//            pstm.setObject(1, orderDetails.getOrderId());
+//            pstm.setObject(2,orderDetails.getItemCode());
+//            pstm.setObject(3,orderDetails.getQty());
+//            pstm.setObject(4,orderDetails.getDiscount());
+//            return pstm.executeUpdate() > 0;
+            return CrudUtil.execute(SQL,
+                    orderDetails.getOrderId(),
+                    orderDetails.getItemCode(),
+                    orderDetails.getQty(),
+                    orderDetails.getDiscount()
+            );
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
